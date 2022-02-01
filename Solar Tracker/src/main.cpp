@@ -11,29 +11,26 @@ namespace Servos
 
 	void moveServo(Servo& servo, int angle)
 	{
-		// dir = abs(dir) / dir;
-		Serial.println(Utils::constrainInRange(static_cast<int>(servo.read()) + angle, 0, 180));
-		servo.write(Utils::constrainInRange(static_cast<int>(servo.read()) + angle, 0, 180));
-		delay(30);
+		int newAngle = Utils::constrainInRange(static_cast<int>(servo.read()) + angle, 0, 180);
+		#ifdef LOG_ANGLES
+			Serial.print("Angle: ");
+			Serial.println(newAngle);
+		#endif
+		servo.write(newAngle);
+		delay(100);
 	}
 
 	void moveLeft()
 		{ moveServo(XServo, -ANGLE_STEP); }
 
 	void moveRight()
-	{
-		moveServo(XServo, ANGLE_STEP);
-	}
+		{ moveServo(XServo, ANGLE_STEP); }
 
 	void moveDown()
-		{
-			moveServo(YServo, -ANGLE_STEP);
-		}
+		{ moveServo(YServo, -ANGLE_STEP); }
 
 	void moveUp()
-		{
-			moveServo(YServo, ANGLE_STEP);
-		}
+		{ moveServo(YServo, ANGLE_STEP); }
 }
 
 namespace Input

@@ -10,3 +10,7 @@
 // Photoresistor settings
 
 #define DARKNESS_THRESHOLD 25	// % of sunlight
+
+// Debuging
+
+#define LOG_ANGLES
