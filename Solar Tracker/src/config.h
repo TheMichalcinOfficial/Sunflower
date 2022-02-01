@@ -17,4 +17,7 @@
 
 // Debuging
 
-#define LOG_ANGLES
+#define DEBUG_LOGGING
+#ifdef DEBUG_LOGGING
+    #define LOG_ANGLES
+#endif

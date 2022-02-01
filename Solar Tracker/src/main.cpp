@@ -44,7 +44,9 @@ namespace Input
 
 void setup()
 {
+#ifdef DEBUG_LOGGING
 	Serial.begin(9600);
+#endif
 
 	pinMode(ERR_LED_PIN, OUTPUT);
 	pinMode(OK_LED_PIN, OUTPUT);
