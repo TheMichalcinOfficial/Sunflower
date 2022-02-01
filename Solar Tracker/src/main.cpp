@@ -39,7 +39,16 @@ namespace Servos
 
 namespace Input
 {
+	Photosensor photoA, photoB, photoC, photoD;
 
+	void updateAll()
+	{
+		AnalogSensor *analogSensors[] = {&photoA, &photoB, &photoC, &photoC, &photoD};
+		for (size_t i = 0; i < sizeof(analogSensors) / sizeof(AnalogSensor *); ++i)
+		{
+			analogSensors[i]->update();
+		}
+	}
 }
 
 void setup()
@@ -54,10 +63,18 @@ void setup()
 	Servos::XServo.attach(X_SERVO_PIN);
 	Servos::YServo.attach(Y_SERVO_PIN);
 	Servos::YServo.write(Y_MAX_ANGLE);
+
+	Input::photoA.assignPin(PHOTORESISTOR_A_PIN);
+	Input::photoB.assignPin(PHOTORESISTOR_B_PIN);
+	Input::photoC.assignPin(PHOTORESISTOR_C_PIN);
+	Input::photoD.assignPin(PHOTORESISTOR_D_PIN);
 }
 
 void loop()
 {
+	Input::updateAll();
+	Input::logLightReadings();
+
 	while (Servos::XServo.read() < X_MAX_ANGLE)
 		{ Servos::moveRight(); Servos::logAngles(); }
 

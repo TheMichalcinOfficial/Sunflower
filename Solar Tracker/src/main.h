@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "pins/pins.h"
+#include "input/photosensor.h"
 
 #ifdef SENSITIVITY_INPUT_PIN
     #define HAS_SENSITIVITY_SETTING
