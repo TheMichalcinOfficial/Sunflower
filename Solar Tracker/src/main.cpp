@@ -11,12 +11,7 @@ namespace Servos
 
 	void moveServo(Servo &servo, int angle, int minAngle = 0, int maxAngle = 180, byte speed = 1)
 	{
-		int newAngle = Utils::constrainInRange(static_cast<int>(servo.read()) + angle, minAngle, maxAngle);
-		#ifdef LOG_ANGLES
-			Serial.print("Angle: ");
-			Serial.println(newAngle);
-		#endif
-		servo.write(newAngle);
+		servo.write(Utils::constrainInRange(static_cast<int>(servo.read()) + angle, minAngle, maxAngle));
 		delay(100 / speed);
 	}
 
@@ -31,6 +26,15 @@ namespace Servos
 
 	void moveUp()
 		{ moveServo(YServo, ANGLE_STEP, Y_MIN_ANGLE, Y_MAX_ANGLE); }
+
+	void logAngles()
+	{
+	#ifdef LOG_ANGLES
+		Serial.print("X Angle: "); Serial.print(XServo.read());
+		Serial.print(" Y Angle: "); Serial.println(YServo.read());
+	#endif
+	}
+
 }
 
 namespace Input
@@ -53,10 +57,16 @@ void setup()
 void loop()
 {
 	while (Servos::XServo.read() < X_MAX_ANGLE)
-		{ Servos::moveRight(); }
+		{ Servos::moveRight(); Servos::logAngles(); }
 
 	while (Servos::XServo.read() > X_MIN_ANGLE)
-		{ Servos::moveLeft(); }
+		{ Servos::moveLeft(); Servos::logAngles(); }
+
+	while (Servos::YServo.read() > Y_MIN_ANGLE)
+		{ Servos::moveDown(); Servos::logAngles(); }
 	
+	while (Servos::YServo.read() < Y_MAX_ANGLE)
+		{ Servos::moveUp(); Servos::logAngles(); }
+
 	delay(500);
 }
