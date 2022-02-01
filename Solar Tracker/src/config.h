@@ -6,6 +6,10 @@
 // Servos
 
 #define ANGLE_STEP 1			// Dergrees
+#define X_MIN_ANGLE 0           // Degrees
+#define X_MAX_ANGLE 180           // Degrees
+#define Y_MIN_ANGLE 90           // Degrees
+#define Y_MAX_ANGLE 180           // Degrees
 
 // Photoresistor settings
 
