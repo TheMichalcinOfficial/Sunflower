@@ -62,7 +62,7 @@ void setup()
 
 	Servos::XServo.attach(X_SERVO_PIN);
 	Servos::YServo.attach(Y_SERVO_PIN);
-	Servos::YServo.write(Y_MAX_ANGLE);
+	Servos::YServo.write(Y_MAX_ANGLE - 1);
 
 	Input::photoA.assignPin(PHOTORESISTOR_A_PIN);
 	Input::photoB.assignPin(PHOTORESISTOR_B_PIN);

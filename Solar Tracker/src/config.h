@@ -24,5 +24,9 @@
 #define DEBUG_LOGGING
 #ifdef DEBUG_LOGGING
     #define LOG_ANGLES
+
     #define LOG_LIGHT_READINGS
+    #ifdef LOG_LIGHT_READINGS
+        #define LOG_INDIVIDUAL_SENSORS
+    #endif
 #endif
