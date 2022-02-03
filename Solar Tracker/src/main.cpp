@@ -51,6 +51,41 @@ namespace Input
 	}
 }
 
+namespace Control
+{
+	bool isAligned_X()
+	{
+		return Input::leftPercentage() == Input::rightPercentage();
+	}
+
+	bool isAligned()
+	{
+		return isAligned_X();
+	}
+
+	void alignX()
+	{
+		if (!isAligned_X())
+		{
+			if (Input::leftPercentage() > Input::rightPercentage())
+				{ Servos::moveLeft(); }
+			else
+				{ Servos::moveRight(); }
+		}
+	}
+
+	void align()
+	{
+		while (!isAligned())
+		{
+			alignX();
+
+			Input::updateAll();
+			Input::logLightReadings();
+		}
+	}
+}
+
 void setup()
 {
 #ifdef DEBUG_LOGGING
@@ -74,18 +109,7 @@ void loop()
 {
 	Input::updateAll();
 	Input::logLightReadings();
-
-	while (Servos::XServo.read() < X_MAX_ANGLE)
-		{ Servos::moveRight(); Servos::logAngles(); }
-
-	while (Servos::XServo.read() > X_MIN_ANGLE)
-		{ Servos::moveLeft(); Servos::logAngles(); }
-
-	while (Servos::YServo.read() > Y_MIN_ANGLE)
-		{ Servos::moveDown(); Servos::logAngles(); }
-	
-	while (Servos::YServo.read() < Y_MAX_ANGLE)
-		{ Servos::moveUp(); Servos::logAngles(); }
+	Control::align();
 
 	delay(500);
 }
