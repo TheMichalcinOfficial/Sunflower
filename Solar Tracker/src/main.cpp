@@ -53,14 +53,38 @@ namespace Input
 
 namespace Control
 {
+	bool shouldMoveLeft()
+	{
+		return Input::leftPercentage() > Input::rightPercentage();
+	}
+
+	bool shouldMoveRight()
+	{
+		return Input::leftPercentage() < Input::rightPercentage();
+	}
+
+	bool shouldMoveDown()
+	{
+		return Input::upPercentage() < Input::downPercentage();
+	}
+
+	bool shouldMoveUp()
+	{
+		return Input::upPercentage() > Input::downPercentage();
+	}
+
 	bool isAligned_X()
 	{
-		return abs(Input::leftPercentage() - Input::rightPercentage()) <= X_ERROR_MARGIN;
+		return abs(Input::leftPercentage() - Input::rightPercentage()) <= X_ERROR_MARGIN ||
+			(shouldMoveLeft() && Servos::XServo.read() == X_MIN_ANGLE) ||
+			(shouldMoveRight() && Servos::XServo.read() == X_MAX_ANGLE);
 	}
 
 	bool isAligned_Y()
 	{
-		return abs(Input::upPercentage() - Input::downPercentage()) <= Y_ERROR_MARGIN;
+		return abs(Input::upPercentage() - Input::downPercentage()) <= Y_ERROR_MARGIN ||
+			(shouldMoveDown() && Servos::YServo.read() == Y_MIN_ANGLE) ||
+			(shouldMoveUp() && Servos::YServo.read() == Y_MAX_ANGLE);
 	}
 
 	bool isAligned()
@@ -72,7 +96,7 @@ namespace Control
 	{
 		if (!isAligned_X())
 		{
-			if (Input::leftPercentage() > Input::rightPercentage())
+			if (shouldMoveLeft())
 				{ Servos::moveLeft(); }
 			else
 				{ Servos::moveRight(); }
@@ -83,7 +107,7 @@ namespace Control
 	{
 		if (!isAligned_Y())
 		{
-			if (Input::upPercentage() > Input::downPercentage())
+			if (shouldMoveUp())
 				{ Servos::moveUp(); }
 			else
 				{ Servos::moveDown(); }
@@ -99,6 +123,8 @@ namespace Control
 
 			Input::updateAll();
 			Input::logLightReadings();
+			Servos::logAngles();
+			delay(5);
 		}
 	}
 }
@@ -126,6 +152,7 @@ void loop()
 {
 	Input::updateAll();
 	Input::logLightReadings();
+	Servos::logAngles();
 	Control::align();
 
 	delay(500);

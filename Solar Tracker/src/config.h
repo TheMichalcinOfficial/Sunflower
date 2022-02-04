@@ -35,6 +35,6 @@
 
     #define LOG_LIGHT_READINGS
     #ifdef LOG_LIGHT_READINGS
-        #define LOG_INDIVIDUAL_SENSORS
+        // #define LOG_INDIVIDUAL_SENSORS
     #endif
 #endif
