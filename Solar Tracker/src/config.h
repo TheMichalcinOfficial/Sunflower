@@ -19,6 +19,14 @@
 #define PHOTORESISTOR_C_PIN A2
 #define PHOTORESISTOR_D_PIN A3
 
+// Tracking
+#define ERROR_MARGIN 1                  // %
+//#define INDIVIDUAL_ERROR_MARGINS
+#ifdef INDIVIDUAL_ERROR_MARGINS
+    #define X_ERROR_MARGIN 1            // %
+    #define Y_ERROR_MARGIN 1            // %
+#endif
+
 // Debuging
 
 #define DEBUG_LOGGING

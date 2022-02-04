@@ -55,12 +55,12 @@ namespace Control
 {
 	bool isAligned_X()
 	{
-		return Input::leftPercentage() == Input::rightPercentage();
+		return abs(Input::leftPercentage() - Input::rightPercentage()) <= X_ERROR_MARGIN;
 	}
 
 	bool isAligned_Y()
 	{
-		return Input::upPercentage() == Input::downPercentage();
+		return abs(Input::upPercentage() - Input::downPercentage()) <= Y_ERROR_MARGIN;
 	}
 
 	bool isAligned()

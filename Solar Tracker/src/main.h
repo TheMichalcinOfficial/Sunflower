@@ -19,6 +19,14 @@
     #define HAS_MODE_SWITCH
 #endif
 
+#ifndef X_ERROR_MARGIN
+    #define X_ERROR_MARGIN ERROR_MARGIN
+#endif
+
+#ifndef Y_ERROR_MARGIN
+    #define Y_ERROR_MARGIN ERROR_MARGIN
+#endif
+
 namespace Utils
 {
     template <typename T>
