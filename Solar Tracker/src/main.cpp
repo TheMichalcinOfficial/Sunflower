@@ -58,9 +58,14 @@ namespace Control
 		return Input::leftPercentage() == Input::rightPercentage();
 	}
 
+	bool isAligned_Y()
+	{
+		return Input::upPercentage() == Input::downPercentage();
+	}
+
 	bool isAligned()
 	{
-		return isAligned_X();
+		return isAligned_X() && isAligned_Y();
 	}
 
 	void alignX()
@@ -74,11 +79,23 @@ namespace Control
 		}
 	}
 
+	void alignY()
+	{
+		if (!isAligned_Y())
+		{
+			if (Input::upPercentage() > Input::downPercentage())
+				{ Servos::moveUp(); }
+			else
+				{ Servos::moveDown(); }
+		}
+	}
+
 	void align()
 	{
 		while (!isAligned())
 		{
 			alignX();
+			alignY();
 
 			Input::updateAll();
 			Input::logLightReadings();
