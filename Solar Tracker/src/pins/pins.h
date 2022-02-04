@@ -2,7 +2,7 @@
 
 // Local includes
 
-#include "..\config.h"
+#include "../config.h"
 
 // Boards list
 
